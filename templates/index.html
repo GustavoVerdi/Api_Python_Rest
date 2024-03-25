@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela do Administrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            padding: 10px;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #27ae60;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 3px solid #bdbdbd;
+            padding: 6px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #969494;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        form {
+            margin-bottom: 10px;
+        }
+
+        #logout-form {
+            margin-left: auto;
+            text-align: left;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #000000;
+            width: 50%;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content form {
+            max-width: 100%;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .modal-content input[type="text"] {
+            width: calc(50% - 10px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .modal-content input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content input[type="submit"]:hover {
+            background-color: #27ae60;
+        }
+
+        .modal-content .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .modal-content .form-group {
+            flex-basis: calc(50% - 10px);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Bem-vindo, Administrador!</h1>
+    <div class="container">
+        <a href="/cadastrar">Cadastrar Nova Empresa</a>
+        <form id="form-buscar" action="/" method="GET">
+            <label for="vendedor_responsavel">Digite o nome do Vendedor:</label>
+            <input type="text" id="vendedor_responsavel" name="vendedor_responsavel" placeholder="Digite o nome do Vendedor">
+            <input type="submit" value="Consultar">
+        </form>
+        <h2>Lista de Empresas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>CNPJ</th>
+                    <th>Situação</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th style="display: none;">Fantasia</th>
+                    <th>UF</th>
+                    <th>Município</th>
+                    <th>Logradouro</th>
+                    <th>Natureza Jurídica</th>
+                    <th>Porte</th>
+                    <th style="display: none;">Telefone</th>
+                    <th>Atividade Principal</th>
+                    <th>Numero de funcionários</th>
+                    <th>Faturmento anual</th>
+                    <th>Vendedor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empresa in resultados %}
+                <tr>
+                    <td class="empresa-id">{{ empresa.id }}</td>
+                    <td>{{ empresa.cnpj }}</td>
+                    <td>{{ empresa.situacao }}</td>
+                    <td>{{ empresa.nome }}</td>
+                    <td>{{ empresa.tipo }}</td>
+                    <td style="display: none;">{{ empresa.fantasia }}</td>
+                    <td>{{ empresa.uf }}</td>
+                    <td>{{ empresa.municipio }}</td>
+                    <td>{{ empresa.logradouro }}</td>
+                    <td>{{ empresa.natureza_juridica }}</td>
+                    <td>{{ empresa.porte }}</td>
+                    <td style="display: none;">{{ empresa.telefone }}</td>
+                    <td>{{ empresa.atividade_principal }}</td>
+                    <td>{{ empresa.numero_funcionarios }}</td>
+                    <td>{{ empresa.faturamento_anual }}</td>
+                    <td>{{ empresa.vendedor_responsavel }}</td>
+                    <td>
+                        <button onclick="openModal(this)">Alterar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="updateForm" action="/atualizar_empresa" method="post" onsubmit="submitForm(event)">
+                <input type="hidden" id="empresaId" name="id">
+                <label for="cnpj">CNPJ:</label><input type="text" id="cnpj" name="cnpj" readonly>
+                <br>
+                <label for="situacao">Situação:</label><input type="text" id="situacao" name="situacao" readonly>
+                <br>
+                <label for="nome">Nome:</label><input type="text" id="nome" name="nome" readonly>
+                <br>
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" name="tipo" readonly>
+                <br>
+                <label for="fantasia">Fantasia:</label><input type="text" id="fantasia" name="fantasia" readonly>
+                <br>
+                <label for="uf">UF:</label><input type="text" id="uf" name="uf" readonly>
+                <br>
+                <label for="municipio">Município:</label><input type="text" id="municipio" name="municipio" readonly>
+                <br>
+                <label for="logradouro">Logradouro:</label>
+                <input type="text" id="logradouro" name="logradouro" readonly>
+                <br>
+                <label for="natureza_juridica">Natureza Jurídica:</label>
+                <input type="text" id="natureza_juridica" name="natureza_juridica" readonly>
+                <br>
+                <label for="porte">Porte:</label>
+                <input type="text" id="porte" name="porte" readonly>
+                <br>
+                <label for="telefone">Telefone:</label>
+                <input type="text" id="telefone" name="telefone" readonly>
+                <br>
+                <label for="atividade_principal">Atividade Principal:</label>
+                <input type="text" id="atividade_principal" name="atividade_principal" readonly>
+                <br>
+                <label for="numero_funcionarios">Número de Funcionários:</label>
+                <input type="text" id="numero_funcionarios" name="numero_funcionarios">
+                <br>
+                <label for="faturamento_anual">Faturamento Anual:</label>
+                <input type="text" id="faturamento_anual" name="faturamento_anual">
+                <br>
+                <label for="vendedor_responsavel">Vendedor Responsável:</label>
+                <input type="text" id="vendedor_responsavel" name="vendedor_responsavel">
+                <br>
+                <input type="submit" value="Salvar Alterações">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("form-buscar").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var vendedor = document.getElementById("vendedor_responsavel").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/buscar?vendedor=" + encodeURIComponent(vendedor));
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var resultados = JSON.parse(xhr.responseText);
+                        atualizarListaEmpresas(resultados);
+                    } else {
+                        console.error("Erro ao buscar vendedores:", xhr.status, xhr.statusText);
+                    }
+                }
+            };
+            xhr.send();
+        });
+
+        function atualizarListaEmpresas(resultados) {
+            var tabela = document.querySelector("table tbody");
+            tabela.innerHTML = "";
+
+            resultados.forEach(function (empresa) {
+                var newRow = tabela.insertRow();
+            });
+        }
+        function openModal(button) {
+            var row = button.closest("tr");
+            var id = row.querySelector(".empresa-id").textContent;
+            document.getElementById("empresaId").value = id;
+
+            var cells = row.cells;
+            document.getElementById("cnpj").value = cells[1] ? cells[1].textContent : '';
+            document.getElementById("situacao").value = cells[2] ? cells[2].textContent : '';
+            document.getElementById("nome").value = cells[3] ? cells[3].textContent : '';
+            document.getElementById("tipo").value = cells[4] ? cells[4].textContent : '';
+            document.getElementById("fantasia").value = cells[5] ? cells[5].textContent : '';
+            document.getElementById("uf").value = cells[6] ? cells[6].textContent : '';
+            document.getElementById("municipio").value = cells[7] ? cells[7].textContent : '';
+            document.getElementById("logradouro").value = cells[8] ? cells[8].textContent : '';
+            document.getElementById("natureza_juridica").value = cells[9] ? cells[9].textContent : '';
+            document.getElementById("porte").value = cells[10] ? cells[10].textContent : '';
+            document.getElementById("telefone").value = cells[11] ? cells[11].textContent : '';
+            document.getElementById("atividade_principal").value = cells[12] ? cells[12].textContent : '';
+            document.getElementById("numero_funcionarios").value = cells[13] ? cells[13].textContent : '';
+            document.getElementById("faturamento_anual").value = cells[14] ? cells[14].textContent : '';
+            document.getElementById("vendedor_responsavel").value = cells[15] ? cells[15].textContent : '';
+
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            var formData = new FormData(document.getElementById("updateForm"));
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/atualizar_empresa");
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    updateTableRow(formData);
+                    closeModal();
+                } else {
+                    alert("Erro ao atualizar empresa: " + xhr.responseText);
+                }
+            };
+            xhr.send(formData);
+        }
+
+        function updateTableRow(formData) {
+            var empresaId = formData.get("id");
+            var row = document.querySelector(".empresa-id[data-id='" + empresaId + "']").closest("tr");
+            var cells = row.cells;
+            cells[13].textContent = formData.get("numero_funcionarios");
+            cells[14].textContent = formData.get("faturamento_anual");
+            cells[15].textContent = formData.get("vendedor_responsavel");
+            closeModal();
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+            clearUpdateFormFields();
+
+        }
+
+        function clearUpdateFormFields() {
+            var fields = document.getElementById("updateForm").querySelectorAll("input[type=text]");
+            fields.forEach(function (field) {
+                field.value = "";
+            });
+
+        }
+
+        document.getElementById("updateForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/atualizar_empresa");
+            xhr.onload = function () {
+                if (xhr.status == 200) {
+                    updateTableRow(formData);
+                    closeModal();
+                    clearUpdateFormFields();
+                } else {
+                    alert("Erro ao atualizar empresa: " + xhr.responseText);
+                }
+            };
+            xhr.send(formData);
+        });
+        function atualizarListaEmpresas(resultados) {
+            var tabela = document.querySelector("table tbody");
+            tabela.innerHTML = "";
+            resultados.forEach(function (empresa) {
+                var newRow = tabela.insertRow();
+            });
+        }
+        function atualizarListaEmpresas(resultados) {
+            var tabela = document.querySelector("table tbody");
+            tabela.innerHTML = "";
+
+            resultados.forEach(function (empresa) {
+                var newRow = tabela.insertRow();
+            });
+        }
+
+    </script>
+</body>
+
+</html>

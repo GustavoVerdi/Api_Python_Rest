@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Cadastro de Empresa</title>
+</head>
+<body>
+    <h1>Cadastro de Empresa</h1>
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    {% if success_message %}
+        <p style="color: green;">{{ success_message }}</p>
+    {% endif %}
+    {% if errorcpf_message %}
+        <p style="color: red;">{{ errorcpf_message }}</p>
+    {% endif %} 
+
+    <div class="container">
+        <form id="inserir_cnpj" method="post" action="/inserir_cnpj">
+            <label for="cnpj">CNPJ:</label>
+            <input type="text" id="ncnpj" name="ncnpj" required>
+            <input type="submit" value="Cadastrar">
+            <a href="/">Voltar</a>
+        </form>
+
+        {% if error %}
+        <div id="error-message" style="color: red;">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
+
+    <style>
+ body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #2980b9;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    padding: 10px;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #27ae60;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+form {
+    margin-bottom: 10px;
+}
+
+#logout-form {
+    margin-left: auto;
+    text-align:left;
+}       
