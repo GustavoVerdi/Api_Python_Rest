@@ -5,37 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
     <title>Cadastro de Empresa</title>
-</head>
-<body>
-    <h1>Cadastro de Empresa</h1>
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
-    {% if success_message %}
-        <p style="color: green;">{{ success_message }}</p>
-    {% endif %}
-    {% if errorcpf_message %}
-        <p style="color: red;">{{ errorcpf_message }}</p>
-    {% endif %} 
-
-    <div class="container">
-        <form id="inserir_cnpj" method="post" action="/inserir_cnpj">
-            <label for="cnpj">CNPJ:</label>
-            <input type="text" id="ncnpj" name="ncnpj" required>
-            <input type="submit" value="Cadastrar">
-            <a href="/">Voltar</a>
-        </form>
-
-        {% if error %}
-        <div id="error-message" style="color: red;">
-            {{ error }}
-        </div>
-        {% endif %}
-    </div>
-</body>
-
-</html>
-
+    
     <style>
  body {
     font-family: Arial, sans-serif;
@@ -125,4 +95,35 @@ form {
 #logout-form {
     margin-left: auto;
     text-align:left;
-}       
+} 
+</style>  
+</head>
+<body>
+    <h1>Cadastro de Empresa</h1>
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    {% if success_message %}
+        <p style="color: green;">{{ success_message }}</p>
+    {% endif %}
+    {% if errorcpf_message %}
+        <p style="color: red;">{{ errorcpf_message }}</p>
+    {% endif %} 
+
+    <div class="container">
+        <form id="inserir_cnpj" method="post" action="/inserir_cnpj">
+            <label for="cnpj">CNPJ:</label>
+            <input type="text" id="ncnpj" name="ncnpj" required>
+            <input type="submit" value="Cadastrar">
+            <a href="/">Voltar</a>
+        </form>
+
+        {% if error %}
+        <div id="error-message" style="color: red;">
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+    
