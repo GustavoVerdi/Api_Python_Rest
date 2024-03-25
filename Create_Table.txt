@@ -1,21 +1,23 @@
+--Cria Tabela no Banco--
 CREATE TABLE tempresa (
     id SERIAL PRIMARY KEY,
-   cnpj VARCHAR NOT NULL UNIQUE,
+    cnpj VARCHAR NOT NULL UNIQUE,
     situacao VARCHAR,
     nome VARCHAR,
     tipo VARCHAR,
     fantasia VARCHAR,
-   uf VARCHAR(2),
+    uf VARCHAR(2),
     municipio VARCHAR,
     logradouro VARCHAR,
     natureza_juridica VARCHAR,
     porte VARCHAR,
     telefone VARCHAR,
     atividade_principal TEXT,
-  numero_funcionarios INTEGER,
+    numero_funcionarios INTEGER,
     faturamento_anual INTEGER,
     vendedor_responsavel VARCHAR
 );
 
 select * from tempresa
+
 drop table tempresa
