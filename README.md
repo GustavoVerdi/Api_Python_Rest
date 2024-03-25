@@ -1,9 +1,9 @@
-## PIP INSTALL
+## Pip Install
     pip install flask
     pip install sqlalchemy
     pip install requests
 
-## CREATE TABLE
+## Create Table
     CREATE TABLE tempresa (
         id SERIAL PRIMARY KEY,
         cnpj VARCHAR NOT NULL UNIQUE,
